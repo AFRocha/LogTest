@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.8.0.css">
+</head>
+<body>
+
+<form id="formulario">
+  Insira o primeiro número:<br>
+  <input type="number" step="1" id="valor1" name="valor1"><br>
+  Insira o segundo número:<br>
+  <input type="number" step="1" id="valor2" name="valor2">
+  <input type="submit" id="submeter" value="OK!">
+</form> 
+<br>
+<div id="resposta">
+
+</div>
+<br>
+<hr>
+<br>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+</body>
+</html>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/qunit/qunit-git.js"></script>
+<script>
+$( "#formulario" ).submit(function( event ) {
+  QUnit.test( "Primeiro numero <= Segundo numero", function( assert ) {
+  assert.ok( new Number($('#valor1').val()) <= new Number($('#valor2').val()), ""  );
+});
+QUnit.test( "Numeros inteiros", function( assert ) {
+  assert.ok( ($.isNumeric($('#valor1').val()) && $.isNumeric($('#valor1').val())), "" );
+});
+ if( $('#valor1').val() > $('#valor2').val() ) {
+  $("#resposta").text("Erro: Primeiro número superior ao segundo número.");
+ }
+ if( !($.isNumeric($('#valor1').val())) || !($.isNumeric($('#valor1').val())) ) {
+  $("#resposta").text("Erro: Apenas inteiros.");
+ }  
+ else {
+  var contador = $('#valor1').val();
+  while (contador <= $('#valor2').val()) {
+      if ( (contador%3 == 0 && contador%5 == 0)){
+         $("#resposta").append("'lucky', ");
+        }else if (contador%3 == 0){
+          if (contador == 3 ) {
+         $("#resposta").append("'fizz fizz', ");
+          }else{
+         $("#resposta").append("'fizz', ");
+         }
+        } else if(contador%5 == 0) {
+           if (contador == 5) {
+            $("#resposta").append("'buzz buzz', ");
+          } else {
+         $("#resposta").append("'buzz', ");
+        }
+        } else {
+         $("#resposta").append(contador+", ");
+        }
+    contador++;}
+    $('#resposta').text(function (_,txt) {
+      return txt.slice(0, -2);
+    });
+    
+}
+    $("#submeter").val('Limpar!');
+
+    event.preventDefault();
+
+ });
+</script>
